@@ -183,7 +183,7 @@ int main(int argc, char* argv[])
     read_measurement(data_dir / "measurements/arm_length.mes", arm_length);
 
     Measurement& height = context.measurements["height"];
-    read_measurement("../data/measurements/height.mes", height);
+    read_measurement(data_dir / "measurements/height.mes", height);
 
     Measurement& head_l = context.measurements["head_l"];
     read_measurement(data_dir / "measurements/head_l.mes", head_l);
