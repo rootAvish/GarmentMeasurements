@@ -78,6 +78,11 @@ int main(int argc, char* argv[])
         .help("Path to data directory of this project. Contains measurement files.")
         .default_value("../data");
 
+    program.add_argument("--landmarks")
+        .help("Landmarks JSON file (absolute or relative to --data_dir).")
+        .default_value("landmarks_female.json");
+
+
     program.add_argument("--debug_dir")
         .help("Path for debugging files.")
         .default_value("");
@@ -119,8 +124,13 @@ int main(int argc, char* argv[])
     context.options.write_debug_files = program.get<bool>("debug");
     context.options.debug_base_dir = std::filesystem::path(program.get<std::string>("debug_dir"));
 
+
+    // Landmark file
+    std::filesystem::path landmarks_arg (program.get<std::string>("landmarks"));
+    std::filesystem::path landmarks_path = landmarks_arg.is_absolute() ? landmarks_arg : (data_dir / landmarks_arg);
+
     // Load landmarks
-    if (!load_landmarks(data_dir / "landmarks_female.json", context.mesh, context.landmarks)) { return -1; }
+    if (!load_landmarks(landmarks_path, context.mesh, context.landmarks)) { return -1; }
 
     if (context.options.write_debug_files)
     {
