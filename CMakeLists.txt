@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.16.3)
 project(ShapesForGarments)
 
+# Default to Debug build with symbols if not specified
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
+endif()
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # set output paths
@@ -60,7 +65,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(COMMON_CXX_FLAGS "-pedantic -Wall -Wextra -Wshadow")
-set(CMAKE_CXX_FLAGS ${COMMON_CXX_FLAGS})
+# Append common flags instead of overwriting existing toolchain flags
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COMMON_CXX_FLAGS}")
+
+# Ensure debug symbols are present in Debug and RelWithDebInfo
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -g")
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 add_subdirectory(src)
