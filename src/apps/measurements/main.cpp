@@ -111,7 +111,9 @@ int main(int argc, char* argv[])
 
     // read mesh
     pmp::SurfaceMesh mesh;
+    std::cout << "Loading Mesh: " << program.get("mesh") << "\n";
     pmp::read(mesh, program.get("mesh"));
+    std::cout << "Mesh has: " << mesh.n_vertices() << " vertices\n";
 
     // context object stores landmarks and measured values and mesh
     MeasurementContext context = {};

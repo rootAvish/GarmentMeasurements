@@ -15,14 +15,14 @@ CONFIG = {
 
 
 def measure_mesh(
-    mesh_file: Path, yaml_file: Path,
+    mesh_file: Path, yaml_file: Path, landmark_json_filename: str,
     write_measurements: bool = False, stdout: bool = False, update: bool = False
 ):
     # do not measure if measurement file exists
     if not update and yaml_file.exists():
         return
 
-    cmd_line = [str(CONFIG["EXE"]), str(mesh_file), str(yaml_file)]
+    cmd_line = [str(CONFIG["EXE"]), str(mesh_file), str(yaml_file), "--landmarks", str(landmark_json_filename)]
 
     if stdout:
         cmd_line.append("--stdout")
@@ -32,6 +32,7 @@ def measure_mesh(
         cmd_line.append("--debug_dir")
         cmd_line.append(str(Path(CONFIG["LOG_DIR"])))
 
+    print(f"Going to run: {cmd_line}")
     pipes = subprocess.Popen(cmd_line, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     std_out, std_err = pipes.communicate()
     std_out = std_out.decode("utf-8").strip()
@@ -85,6 +86,10 @@ def main():
     parser.add_argument("--log_dir", type=Path,
                         help="Debugging log directory.",
                         default=Path(os.getcwd()).parent / "output" / "logs")
+    parser.add_argument("--landmark_json_filename", type=str,
+                        help="The filename to use for landmarks information",
+                        default="landmarks_female.json")
+
 
     args, extra_args = parser.parse_known_args()
     configure(args)
@@ -93,6 +98,8 @@ def main():
     meshes_dir = Path(CONFIG["MESHES_DIR"])
 
     meshes = list_mesh_files(meshes_dir)
+    print(f"Meshes are: {meshes}")
+    landmark_json_filename = args.landmark_json_filename
 
     # create ouput dir
     measurement_dir.mkdir(exist_ok=True)
@@ -110,7 +117,7 @@ def main():
             continue
 
         print(f"Process {mesh}")
-        measure_mesh(meshes_dir / mesh, measurement_dir / f"{numbers[0]}.yaml",
+        measure_mesh(meshes_dir / mesh, measurement_dir / f"{numbers[0]}.yaml", landmark_json_filename,
                      update=True, stdout=False, write_measurements=debug_mode)
 
 
