@@ -1,0 +1,96 @@
+{
+  "convex_hull_normal": [
+    0.0,
+    1.0,
+    1.0
+  ],
+  "halfspaces": [
+    {
+      "axes": [
+        {
+          "axis": "Y",
+          "type": "normal"
+        }
+      ],
+      "origin": "bust_right"
+    },
+    {
+      "axes": [
+        {
+          "landmarks": [
+            "shoulder_right",
+            "neck_right"
+          ],
+          "type": "landmarks"
+        },
+        {
+          "axis": "Y",
+          "type": "axis"
+        }
+      ],
+      "origin": "shoulder_right"
+    }
+  ],
+  "is_convex_hull": true,
+  "measurement_plane": {
+    "type": "CENTROID",
+    "normal_axis": "X"
+  },
+  "name": "bust_line",
+  "num_face_rings": 6,
+  "selection": [
+    20774,
+    14409,
+    11526,
+    26967,
+    27623,
+    23619,
+    12272,
+    25690,
+    10897,
+    10497,
+    23077,
+    10454,
+    32413,
+    33033,
+    28258,
+    13997,
+    27949,
+    16074,
+    10845,
+    7300,
+    10440,
+    4015,
+    23113,
+    32178,
+    33265,
+    33265,
+    32278,
+    12799,
+    12799,
+    30992,
+    30992,
+    29740,
+    29740,
+    29658,
+    29658,
+    14392,
+    14392,
+    14392,
+    19404,
+    19404,
+    15356,
+    15356,
+    29525,
+    29525,
+    1116,
+    13814,
+    13814,
+    20997,
+    27880,
+    17481,
+    13510,
+    24109
+  ],
+  "type": "AxisAlignedPlanePart"
+}
